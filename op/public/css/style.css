@@ -1,0 +1,166 @@
+/* 
+ Main CSS (pages, navbar, sidebar,footer
+*/
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+header {
+  background-color: #f4f4f4;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 25px;
+  margin-bottom: 0;
+}
+header h1 {
+  margin: 0;
+  padding: 0;
+}
+.button {
+  background-color: #5895d7;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.button:hover {
+  background-color: #3e6a99;
+}
+body {
+  background-color: #f4f4f4;
+}
+.container {
+  display: flex;
+  flex: 1;
+  background-color: #f4f4f4;
+}
+aside {
+  width: 50px;
+  background-color: #f4f4f4;
+  padding: 20px 0px 10px 10px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+aside:hover {
+  width: 130px;
+}
+main {
+  flex: 1;
+  padding: 10px 20px 0 20px;
+  background-color: #ffffff;
+  border-top-left-radius: 30px;
+  margin: 10px 0 0 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+nav ul {
+  padding: 0;
+}
+nav ul li {
+  margin: 10px 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+}
+nav ul li a i {
+  min-width: 40px;
+  text-align: center;
+  font-size: 1.5em; /* Increase icon size */
+}
+
+nav ul li a.active {
+  background-color: #e0e0e0;
+  color: #007bff;
+  border-radius: 5px;
+}
+
+nav ul li a span {
+  padding-left: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+aside:hover nav ul li a span {
+  opacity: 1;
+}
+nav ul li a:hover {
+  color: #007bff;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1px;
+}
+
+/* ---------------------Main CSS END ------------------------- */
+
+/* Login page CSS */
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-form input[type="submit"] {
+  background-color: #5895d7;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form input[type="submit"]:hover {
+  background-color: #3e6a99;
+}
+
+.login-form .form-footer {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-form .form-footer a {
+  color: #5895d7;
+  text-decoration: none;
+}
+
+.login-form .form-footer a:hover {
+  text-decoration: underline;
+}
+
