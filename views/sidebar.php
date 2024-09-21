@@ -4,3 +4,5 @@
         <li><a href="index.php?page=about" class="<?php echo (!isset($_GET['page']) || $_GET['page'] == 'about') ? 'active' : ''; ?>"><i class="fas fa-info-circle"></i><span>About</span></a></li>
     </ul>
 </nav>
+
+

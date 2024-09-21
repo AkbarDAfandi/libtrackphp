@@ -11,7 +11,7 @@
 
 <body>
     <header>
-        <h1>LibTrack - Library Management System</h1>
+        <h1>Admin Page LibTrack - Library Management System</h1>
         <div class="auth-buttons">
             <?php if(isset($_SESSION['user_id'])): ?>
                 <a href="views/logout.php" class="button"><span>Logout</span></a>

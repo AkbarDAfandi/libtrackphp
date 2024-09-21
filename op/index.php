@@ -1,22 +1,29 @@
 <?php
 session_start();
+include 'views/header.php';
 
-// Check if the user is logged in and has the admin role
-if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
-    // Redirect to login page or show an access denied message
-    header('Location: ../views/login.php');
-    exit();
-}
-
-include '../views/header.php';
+// Check if user is logged in and has admin role
+$isAdmin = isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'Home';
-$pagePath = '../views/' . $page . '.php';
+$pagePath = 'views/' . $page . '.php';
 
-if (file_exists($pagePath)) {
-    include $pagePath;
+if ($isAdmin) {
+    // If admin, allow access to all pages
+    if (file_exists($pagePath)) {
+        include $pagePath;
+    } else {
+        echo "Content not found.";
+    }
 } else {
-    echo "Content not found.";
+    // If not admin, only allow access to public pages or redirect to login
+    $publicPages = ['Home', 'About', 'Login']; // Add other public pages as needed
+    if (in_array($page, $publicPages) && file_exists($pagePath)) {
+        include $pagePath;
+    } else {
+        header('Location: views/login.php');
+        exit();
+    }
 }
 ?>
 
@@ -26,3 +33,4 @@ if (file_exists($pagePath)) {
     <p>&copy; 2024 Dynamic Website</p>
 </footer>
 </body>
+
