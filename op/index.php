@@ -21,7 +21,7 @@ if ($isAdmin) {
     if (in_array($page, $publicPages) && file_exists($pagePath)) {
         include $pagePath;
     } else {
-        header('Location: views/login.php');
+        header('Location: /views/login.php');
         exit();
     }
 }
