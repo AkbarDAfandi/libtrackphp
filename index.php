@@ -20,40 +20,102 @@ session_start();
         </aside>
         <main>
             <h1>This weeks top books</h1>
-            <div class="top-choices-container">
+            <div class="top-choices-container" id="top-books">
                 <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
                 <div class="top-choices">
-            <?php
-            // Include your database connection file
-            include 'configs/db.php';
+                    <?php
+                    // Include your database connection file
+                    include 'configs/db.php';
 
-            // Fetch data from the database (replace with your query)
-            $query = "SELECT title, img, author FROM books";
-            $result = mysqli_query($conn, $query);
+                    // Fetch data from the database (replace with your query)
+                    $query = "SELECT title, img, author FROM books";
+                    $result = mysqli_query($conn, $query);
 
-            // Check if there are any results
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="choice">';
-                    echo '<img src="' . $row['img'] . '" alt="' . $row['title'] . '">';
-                    echo '<h3>' . $row['title'] . '</h3>';
-                    echo '<p>' . $row['author'] . '</p>';
-                    echo '</div>';
-                }
-            } else {
-                echo "No books found.";
-            }
+                    // Check if there are any results
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<div class="choice">';
+                            echo '<img src="' . $row['img'] . '" alt="' . $row['title'] . '">';
+                            echo '<h3 class="title">' . $row['title'] . '</h3>';
+                            echo '<p class="author">' . $row['author'] . '</p>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No books found.";
+                    }
 
-            // Close the database connection
-            mysqli_close($conn);
-            ?>
-        </div>
-        <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
-    </div>
+                    // Close the database connection
+                    mysqli_close($conn);
+                    ?>
+                </div>
+                <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <h1>Latest additions</h1>
+            <div class="top-choices-container" id="latest-additions">
+                <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
+                <div class="top-choices">
+                    <?php
+                    // Include your database connection file
+                    include 'configs/db.php';
+
+                    // Fetch data from the database (replace with your query)
+                    $query = "SELECT title, img, author FROM books";
+                    $result = mysqli_query($conn, $query);
+
+                    // Check if there are any results
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<div class="choice">';
+                            echo '<img src="' . $row['img'] . '" alt="' . $row['title'] . '">';
+                            echo '<h3 class="title">' . $row['title'] . '</h3>';
+                            echo '<p class="author">' . $row['author'] . '</p>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No books found.";
+                    }
+
+                    // Close the database connection
+                    mysqli_close($conn);
+                    ?>
+                </div>
+                <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <h1>Currently available books</h1>
+            <div class="top-choices-container" id="available-books">
+                <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
+                <div class="top-choices">
+                    <?php
+                    // Include your database connection file
+                    include 'configs/db.php';
+
+                    // Fetch data from the database (replace with your query)
+                    $query = "SELECT title, img, author FROM books";
+                    $result = mysqli_query($conn, $query);
+
+                    // Check if there are any results
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<div class="choice">';
+                            echo '<img src="' . $row['img'] . '" alt="' . $row['title'] . '">';
+                            echo '<h3 class="title">' . $row['title'] . '</h3>';
+                            echo '<p class="author">' . $row['author'] . '</p>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No books found.";
+                    }
+
+                    // Close the database connection
+                    mysqli_close($conn);
+                    ?>
+                </div>
+                <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </main>
     </div>
     <footer>
-        <p>&copy; 2024 Dynamic Website</p>
+        <p>&copy; 2024 - LibTrack</p>
     </footer>
     <script src="public/js/scroll.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

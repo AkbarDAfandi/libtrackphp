@@ -1,28 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const container = document.querySelector('.top-choices');
-    const leftBtn = document.querySelector('.scroll-btn.left');
-    const rightBtn = document.querySelector('.scroll-btn.right');
+    setupScrolling('top-books');
+    setupScrolling('available-books');
+    setupScrolling('latest-additions');
+});
 
-    function checkScroll() {
-        const isAtStart = container.scrollLeft === 0;
-        const isAtEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 1;
-
-        leftBtn.style.display = isAtStart ? 'none' : 'block';
-        rightBtn.style.display = isAtEnd ? 'none' : 'block';
-    }
-
-    container.addEventListener('scroll', checkScroll);
-    window.addEventListener('resize', checkScroll);
-
-    leftBtn.addEventListener('click', () => {
-        container.scrollBy({ left: -200, behavior: 'smooth' });
-    });
+function setupScrolling(containerId) {
+    const container = document.getElementById(containerId);
+    const scrollContainer = container.querySelector('.top-choices');
+    const leftBtn = container.querySelector('.scroll-btn.left');
+    const rightBtn = container.querySelector('.scroll-btn.right');
 
     rightBtn.addEventListener('click', () => {
-        container.scrollBy({ left: 200, behavior: 'smooth' });
+        scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
     });
 
-    // Initial check
-    checkScroll();
-});
+    leftBtn.addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
+    });
+
+    scrollContainer.addEventListener('scroll', () => {
+        leftBtn.style.display = scrollContainer.scrollLeft > 0 ? 'block' : 'none';
+        rightBtn.style.display = 
+            scrollContainer.scrollLeft < scrollContainer.scrollWidth - scrollContainer.clientWidth 
+            ? 'block' : 'none';
+    });
+}
+
 

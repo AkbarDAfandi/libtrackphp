@@ -71,8 +71,9 @@ nav ul li a {
   color: #333;
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 10px 5px;
   transition: background-color 0.3s ease;
+  border-radius: 10px;
 }
 nav ul li a i {
   min-width: 40px;
@@ -81,13 +82,13 @@ nav ul li a i {
 }
 
 nav ul li a.active {
-  background-color: #e0e0e0;
-  color: #007bff;
-  border-radius: 5px;
+  background-color: #007bff;
+  color: #ffffff;
+  border-radius: 10px;
 }
 
 nav ul li a span {
-  padding-left: 10px;
+  padding-left: 5px;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -95,10 +96,11 @@ aside:hover nav ul li a span {
   opacity: 1;
 }
 nav ul li a:hover {
-  color: #007bff;
-  background-color: #e0e0e0;
+  color: #ffffff;
+  background-color: #007bff;
   border-radius: 10px;
 }
+
 footer {
   background-color: #333;
   color: #fff;
@@ -216,7 +218,7 @@ footer {
 .register-container .error {
   color: red;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* wm rexec.png */
 }
 
 /* --------------------- Register page CSS END --------------------- */
@@ -225,7 +227,8 @@ footer {
 .top-choices-container {
   position: relative;
   overflow: hidden;
-  padding: 0 40px; /* Add padding for scroll buttons */
+  padding: 0 40px; 
+  margin-bottom: 40px;
 }
 
 .top-choices {
@@ -233,28 +236,28 @@ footer {
   overflow-x: auto;
   scroll-behavior: smooth;
   -ms-overflow-style: none;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   transition: transform 0.3s ease-out;
-  gap: 20px; /* Use gap instead of margin for consistent spacing */
+  gap: 30px;
 }
 
 .top-choices::-webkit-scrollbar {
-  display: none; /* WebKit */
+  display: none;
 }
-  .choice {
-    flex: 0 0 auto;
-    width: calc(20% - 16px); /* Reduced from 25% to 20% */
-    max-width: 160px; /* Reduced from 200px */
-  }
+.choice {
+  flex: 0 0 auto;
+  width: calc(20% - 16px);
+  max-width: 160px;
+}
 
-  .choice img {
-    width: 100%;
-    height: 240px; /* Reduced from 300px */
-    object-fit: cover;
-    transition: opacity 0.3s ease-out;
-    border-radius: 10px;
-  }
+.choice img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  transition: opacity 0.3s ease-out;
+  border-radius: 10px;
+}
 .scroll-btn {
   position: absolute;
   top: 50%;
@@ -267,6 +270,7 @@ footer {
   z-index: 10;
   opacity: 0.7;
   transition: opacity 0.3s ease;
+  border-radius: 5px;
 }
 
 .scroll-btn:hover {
@@ -277,9 +281,21 @@ footer {
   left: 10px;
 }
 
+.title {
+  font-size: 1em;
+  margin-bottom: 0;
+}
+
+.author {
+  font-size: 0.8em;
+  margin-top: 3px;
+  color: #777;
+}
+
 .scroll-btn.right {
   right: 10px;
-}@media screen and (max-width: 600px) {
+}
+@media screen and (max-width: 600px) {
   .top-choices-container {
     padding: 0 30px;
   }
@@ -291,22 +307,22 @@ footer {
 }
 @media screen and (max-width: 1200px) {
   .choice {
-    width: calc(25% - 15px); /* 4 items per row */
+    width: calc(25% - 15px);
   }
 }
 
 @media screen and (max-width: 900px) {
   .choice {
-    width: calc(33.33% - 13.33px); /* 3 items per row */
+    width: calc(33.33% - 13.33px);
   }
 }
 
 @media screen and (max-width: 600px) {
   .choice {
-    width: calc(50% - 10px); /* 2 items per row */
+    width: calc(50% - 10px);
   }
 
   .top-choices-container {
-    padding: 0 20px; /* Reduce padding for smaller screens */
+    padding: 0 20p;
   }
 }
