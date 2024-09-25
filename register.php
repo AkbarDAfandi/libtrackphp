@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../configs/db.php';
+require_once 'configs/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - LibTrack</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
     <div class="register-container">
-        <h2>Register to LibT    rack</h2>
+        <h2>Register to LibTrack</h2>
         <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
         <form action="" method="post">
             <input type="text" name="username" placeholder="Username" required>
