@@ -15,10 +15,10 @@ session_start();
 <body>
     <?php include "includes/header.php" ?>
     <div class="container">
-        <aside>
+        <aside class="sidebar">
             <?php include 'includes/sidebar.php'; ?>
         </aside>
-        <main>
+        <main class="main-content">
             <h1>This weeks top books</h1>
             <div class="top-choices-container" id="top-books">
                 <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
@@ -115,9 +115,10 @@ session_start();
         </main>
     </div>
     <footer>
-        <p>&copy; 2024 - LibTrack</p>
+        <p class="copyright">&copy; 2024 - LibTrack</p>
     </footer>
     <script src="public/js/scroll.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="public/js/nav.js"></script>
+
 </body>
