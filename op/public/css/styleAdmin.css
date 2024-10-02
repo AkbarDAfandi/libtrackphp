@@ -32,7 +32,7 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px;
+  padding: 10px;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -42,7 +42,7 @@ header h1 {
   font-family: inherit;
   font-size: 16px;
   color: #333;
-  border: 1px solid #ddd;
+  border: none;
   width: 30em;
   padding: 7px;
   border-radius: 10px;
@@ -153,11 +153,15 @@ nav ul li a {
   padding: 10px 5px;
   transition: background-color 0.3s ease;
   border-radius: 10px;
+  overflow: hidden;
 }
 nav ul li a i {
+  flex-shrink: 0;
+  margin-right: 10px;
   min-width: 40px;
   text-align: center;
   font-size: 1.5em;
+  z-index: 2;
 }
 
 nav ul li a.active {
@@ -315,129 +319,50 @@ footer {
 
 /* --------------------- Register page CSS END --------------------- */
 
-/* --------------------- Display Row Home --------------------- */
-.top-choices-container {
-  position: relative;
-  overflow: hidden;
-  padding: 0 40px;
-  margin-bottom: 40px;
-}
-
-.top-choices {
-  display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  transition: transform 0.3s ease-out;
-  gap: 30px;
-}
-
-.top-choices::-webkit-scrollbar {
-  display: none;
-}
-.choice {
-  flex: 0 0 auto;
-  width: calc(20% - 16px);
-  max-width: 160px;
-}
-
-.choice img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  transition: opacity 0.3s ease-out;
+.table-container {
+  max-width: 100%;
+  margin: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
   border-radius: 10px;
-}
-.scroll-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 10;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-  border-radius: 5px;
+
 }
 
-.scroll-btn:hover {
-  opacity: 1;
-}
-
-.scroll-btn.left {
-  left: 10px;
-}
-
-.title {
-  font-size: 1em;
-  margin-bottom: 0;
-}
-
-.author {
-  font-size: 0.8em;
-  margin-top: 3px;
-  color: #777;
-}
-
-.scroll-btn.right {
-  right: 10px;
-}
-@media screen and (max-width: 600px) {
-  .top-choices-container {
-    padding: 0 30px;
-  }
-
-  .scroll-btn {
-    padding: 5px;
-    font-size: 0.8em;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .choice {
-    width: calc(25% - 15px);
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .choice {
-    width: calc(33.33% - 13.33px);
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .choice {
-    width: calc(50% - 10px);
-  }
-
-  .top-choices-container {
-    padding: 0 20p;
-  }
-}
-/* Category page */
-
-.category-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+table {
+  border-collapse: collapse;
+  width: 100%;
   margin-bottom: 20px;
 }
 
-.category-btn {
-  padding: 10px 20px;
-  background-color: #f0f0f0;
+th, td {
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  color: #333;
-  transition: background-color 0.3s;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
 }
 
-.category-btn:hover, .category-btn.active {
-  background-color: #ddd;
+th {
+  background-color: #f4f4f4;
+  border-bottom: 2px solid #ddd; 
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+.btn-edit, .btn-delete {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-edit {
+  border-radius: 5px;
+  background-color: #2196F3;
+}
+
+.btn-delete {
+  border-radius: 5px;
+  background-color: #f44336;
 }
