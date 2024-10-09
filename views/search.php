@@ -1,7 +1,7 @@
 <?php
 session_start();
 $_GET['page'] = 'search';
-include 'configs/db.php';
+include '../configs/db.php';
 
 $searchResults = [];
 if (isset($_GET['query'])) {
@@ -20,15 +20,15 @@ if (isset($_GET['query'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LibTrack - Search</title>
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <?php include "includes/header.php" ?>
+    <?php include "../includes/header.php" ?>
     <div class="container">
         <aside class="sidebar">
-            <?php include 'includes/sidebar.php'; ?>
+            <?php include '../includes/sidebar.php'; ?>
         </aside>
         <main class="main-content">
             <div class="search-bar">
@@ -44,7 +44,7 @@ if (isset($_GET['query'])) {
                     if (!empty($searchResults)) {
                         foreach ($searchResults as $book) {
                             echo '<div class="choice">';
-                            echo '<img src="' . $book['img'] . '" alt="' . $book['title'] . '">';
+                            echo '<img src="../' . $book['img'] . '" alt="' . $book['title'] . '">';
                             echo '<h3 class="title">' . $book['title'] . '</h3>';
                             echo '<p class="author">' . $book['author'] . '</p>';
                             echo '</div>';

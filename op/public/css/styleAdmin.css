@@ -319,6 +319,8 @@ footer {
 
 /* --------------------- Register page CSS END --------------------- */
 
+
+/* --------------------- Manage Books list CSS --------------------- */
 .table-container {
   max-width: 100%;
   margin: 20px;
@@ -366,3 +368,60 @@ tr:last-child td {
   border-radius: 5px;
   background-color: #f44336;
 }
+
+
+/* --------------------- Manage Books list CSS END --------------------- */
+
+
+/* --------------------- Edit Book CSS --------------------- */
+
+.book-edit-layout {
+  display: flex;
+  padding: 0 2rem ;
+  margin-bottom: 70px;
+}
+
+.book-cover {
+  margin-top: 15px;
+  flex: 0 0 220px;
+}
+
+.book-cover-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.book-details {
+  flex: 1;
+}
+
+.book-edit-form label {
+  display: block;
+  margin-top: 1rem;
+}
+
+.book-edit-form input,
+.book-edit-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.book-edit-form button {
+  margin-top: 1rem;
+}
+
+
+/* --------------------- Edit Book CSS END --------------------- */
+
+
+/* --------------------- Add Book CSS --------------------- */
+
+
+
+
+
+
+
+/* --------------------- Add Book CSS END --------------------- */

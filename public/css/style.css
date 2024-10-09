@@ -32,7 +32,7 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px;
+  padding: 10px;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -42,7 +42,7 @@ header h1 {
   font-family: inherit;
   font-size: 16px;
   color: #333;
-  border: 1px solid #ddd;
+  border: 1px;
   width: 30em;
   padding: 7px;
   border-radius: 10px;
@@ -344,12 +344,26 @@ footer {
 }
 
 .choice img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  transition: opacity 0.3s ease-out;
-  border-radius: 10px;
+    width: 100%;
+    height: 200px; /* Adjust this value as needed */
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.3s ease-out;
+    border-radius: 10px;
 }
+
+.choice {
+    width: 150px; /* Adjust this value to set the width of each book item */
+    margin: 0 10px;
+}
+
+.top-choices {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px 0;
+}
+
 .scroll-btn {
   position: absolute;
   top: 50%;
@@ -364,7 +378,6 @@ footer {
   transition: opacity 0.3s ease;
   border-radius: 5px;
 }
-
 .scroll-btn:hover {
   opacity: 1;
 }
@@ -418,8 +431,9 @@ footer {
     padding: 0 20p;
   }
 }
-/* Category page */
+/* --------------------- Display Row Home END --------------------- */
 
+/* --------------------- Display Row Category --------------------- */
 .category-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -440,4 +454,17 @@ footer {
 
 .category-btn:hover, .category-btn.active {
   background-color: #ddd;
+}
+/* --------------------- Display Row Category END --------------------- */
+
+/* --------------------- Display Row Book --------------------- */
+
+.book-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.book-link:hover {
+    opacity: 0.8;
 }

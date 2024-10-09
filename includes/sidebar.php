@@ -22,7 +22,7 @@
           link.addEventListener('click', function(e) {
               e.preventDefault();
               const page = this.dataset.page;
-              window.location.href = page + '.php?page=' + page;
+              window.location.href = '../views/'+ page + '.php?page=' + page;
           });
       });
   });

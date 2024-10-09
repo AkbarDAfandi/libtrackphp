@@ -9,15 +9,15 @@ $_GET['page'] = 'category';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LibTrack</title>
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <?php include "includes/header.php" ?>
+    <?php include "../includes/header.php" ?>
     <div class="container">
         <aside class="sidebar">
-            <?php include 'includes/sidebar.php'; ?>
+            <?php include '../includes/sidebar.php'; ?>
         </aside>
         <main class="main-content">
             <h1>Categories</h1>
@@ -25,7 +25,7 @@ $_GET['page'] = 'category';
                 <a href="category.php" class="category-btn">All</a>
                 <?php
                 // Include your database connection file
-                include 'configs/db.php';
+                include '../configs/db.php';
 
                 $currentCategory = isset($_GET['category']) ? $_GET['category'] : '';
 
@@ -57,7 +57,7 @@ $result = mysqli_query($conn, $query);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<div class="choice">';
-                            echo '<img src="' . $row['img'] . '" alt="' . $row['title'] . '">';
+                            echo '<img src="../' . $row['img'] . '" alt="' . $row['title'] . '">';
                             echo '<h3 class="title">' . $row['title'] . '</h3>';
                             echo '<p class="author">' . $row['author'] . '</p>';
                             echo '</div>';

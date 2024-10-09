@@ -1,8 +1,8 @@
 <nav>
     <ul>
         <li><a href="#" data-page="index" class="nav-link"><i class="fas fa-home"></i><span>Home</span></a></li>
-        <li><a href="#" data-page="editBooks" class="nav-link"><i class="fa-solid fa-pen-to-square"></i><span>Edit Books</span></a></li>
-        <li><a href="#" data-page="history" class="addBooks"><i class="fa-solid fa-plus"></i><span>Add Books</span></a></li>
+        <li><a href="#" data-page="manageBooks" class="nav-link"><i class="fa-solid fa-pen-to-square"></i><span>Edit Books</span></a></li>
+        <li><a href="#" data-page="addBooks" class="nav-link"><i class="fa-solid fa-plus"></i><span>Add Books</span></a></li>
         <li><a href="#" data-page="borrowed" class="nav-link"><i class="fa-solid fa-book-open"></i><span class="marquee">Borrowed</span></a></li>
     </ul>
 </nav>
@@ -13,7 +13,7 @@
         const currentPage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'index'; ?>';
 
         navLinks.forEach(link => {
-            if (link.dataset.page === currentPage) {
+            if (link.dataset.page === currentPage || (currentPage === 'editBooks' && link.dataset.page === 'manageBooks')) {
                 link.classList.add('active');
             }
 
