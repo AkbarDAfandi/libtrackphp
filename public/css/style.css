@@ -36,11 +36,13 @@ header h1 {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+
 }
 
 .search-bar input[type="text"] {
   font-family: inherit;
   font-size: 16px;
+  background-color: #f4f4f4;
   color: #333;
   border: 1px;
   width: 30em;
@@ -400,37 +402,7 @@ footer {
 .scroll-btn.right {
   right: 10px;
 }
-@media screen and (max-width: 600px) {
-  .top-choices-container {
-    padding: 0 30px;
-  }
 
-  .scroll-btn {
-    padding: 5px;
-    font-size: 0.8em;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .choice {
-    width: calc(25% - 15px);
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .choice {
-    width: calc(33.33% - 13.33px);
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .choice {
-    width: calc(50% - 10px);
-  }
-
-  .top-choices-container {
-    padding: 0 20p;
-  }
-}
 /* --------------------- Display Row Home END --------------------- */
 
 /* --------------------- Display Row Category --------------------- */
@@ -467,4 +439,65 @@ footer {
 
 .book-link:hover {
     opacity: 0.8;
+}
+
+.book-details {
+  display: flex;
+}
+
+.book-image img {
+  max-width: 300px;
+  height: auto;
+  margin: 30px 2rem;
+}
+
+.book-info {
+  flex: 1;
+}
+
+.book-info p {
+  margin-bottom: 1rem;
+}
+
+.borrow-btn {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.borrow-btn:hover {
+  background-color: #45a049;
+}
+
+.borrow-btn.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-top: 10px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.back-btn i {
+    margin-right: 5px;
 }

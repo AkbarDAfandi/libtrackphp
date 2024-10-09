@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $isbn = $_POST['isbn'];
     $category = $_POST['category'];
     $description = $_POST['description'];
+    $stock = $_POST['stock'];
+
 
     // Handle image upload
     $img_path = $book ? $book['img'] : '';
@@ -47,11 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!isset($error)) {
         if ($book_id) {
-            $stmt = $conn->prepare("UPDATE books SET title = ?, author = ?, isbn = ?, category = ?, description = ?, img = ? WHERE isbn = ?");
-            $stmt->bind_param("sssssss", $title, $author, $isbn, $category, $description, $img_path);
+            $stmt = $conn->prepare("UPDATE books SET title = ?, author = ?, isbn = ?, category = ?, description = ?, img = ?, stock = ? WHERE isbn = ?");
+            $stmt->bind_param("sssssssi", $title, $author, $isbn, $category, $description, $img_path, $stock, $book_id);
         } else {
-            $stmt = $conn->prepare("INSERT INTO books (title, author, isbn, category, description, img) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssss", $title, $author, $isbn, $category, $description, $img_path);
+            $stmt = $conn->prepare("INSERT INTO books (title, author, isbn, category, description, img, stock) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssi", $title, $author, $isbn, $category, $description, $img_path, $stock);
         }
 
         if ($stmt->execute()) {
@@ -110,6 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         <label for="description">Description:</label>
                         <textarea id="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' name="description" required><?php echo $book ? $book['description'] : ''; ?></textarea>
+
+
+                        <label for="stock">Stock:</label>
+                        <input type="number" id="stock" name="stock" value="<?php echo $book ? $book['stock'] : ''; ?>" required>
+
 
 
                         <button type="submit"><?php echo $book_id ? 'Update' : 'Add'; ?> Book</button>

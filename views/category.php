@@ -46,21 +46,23 @@ $_GET['page'] = 'category';
                 <div class="top-choices">
                     <?php
 
-$currentCategory = isset($_GET['category']) ? mysqli_real_escape_string($conn, $_GET['category']) : '';
+                    $currentCategory = isset($_GET['category']) ? mysqli_real_escape_string($conn, $_GET['category']) : '';
 
-$query = $currentCategory ? 
-    "SELECT title, img, author FROM books WHERE category = '$currentCategory'" :
-    "SELECT title, img, author FROM books";
+                    $query = $currentCategory ?
+                        "SELECT title, img, author, id FROM books WHERE category = '$currentCategory'" :
+                        "SELECT title, img, author, id FROM books";
 
-$result = mysqli_query($conn, $query);
+                    $result = mysqli_query($conn, $query);
 
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<a href="book.php?id=' . $row['id'] . '" class="book-link">';
                             echo '<div class="choice">';
                             echo '<img src="../' . $row['img'] . '" alt="' . $row['title'] . '">';
                             echo '<h3 class="title">' . $row['title'] . '</h3>';
                             echo '<p class="author">' . $row['author'] . '</p>';
                             echo '</div>';
+                            echo '</a>';
                         }
                     } else {
                         echo "No books found in this category.";

@@ -43,11 +43,13 @@ if (isset($_GET['query'])) {
                     <?php
                     if (!empty($searchResults)) {
                         foreach ($searchResults as $book) {
+                            echo '<a href="book.php?id=' . $book['id'] . '" class="book-link">';
                             echo '<div class="choice">';
                             echo '<img src="../' . $book['img'] . '" alt="' . $book['title'] . '">';
                             echo '<h3 class="title">' . $book['title'] . '</h3>';
                             echo '<p class="author">' . $book['author'] . '</p>';
                             echo '</div>';
+                            echo '</a>';
                         }
                     } elseif (isset($_GET['query'])) {
                         echo '<p>No books found matching your search.</p>';
@@ -61,15 +63,8 @@ if (isset($_GET['query'])) {
     <footer>
         <p class="copyright">© 2024 - LibTrack</p>
     </footer>
-    <script src="public/js/scroll.js"></script>
+    <script src="../public/js/scroll.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="public/js/nav.js"></script>
-</body>
-</html>    <footer>
-        <p class="copyright">© 2024 - LibTrack</p>
-    </footer>
-    <script src="public/js/scroll.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="public/js/nav.js"></script>
+    <script src="../public/js/nav.js"></script> 
 </body>
 </html>

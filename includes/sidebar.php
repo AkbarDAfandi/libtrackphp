@@ -12,7 +12,7 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
       const navLinks = document.querySelectorAll('.nav-link');
-      const currentPage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home'; ?>';
+      const currentPage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'index'; ?>';
 
       navLinks.forEach(link => {
           if (link.dataset.page === currentPage) {

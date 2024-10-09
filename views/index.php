@@ -60,7 +60,8 @@ session_start();
                     include '../configs/db.php';
 
                     // Fetch data from the database (replace with your query)
-                    $query = "SELECT id, title, img, author FROM books";
+                    $query = "SELECT id, title, img, author FROM books ORDER BY date_added DESC LIMIT 10";
+                
                     $result = mysqli_query($conn, $query);
 
                     // Check if there are any results
@@ -94,7 +95,7 @@ session_start();
                     include '../configs/db.php';
 
                     // Fetch data from the database (replace with your query)
-                    $query = "SELECT id, title, img, author FROM books";
+                    $query = "SELECT id, title, img, author FROM books WHERE stock > 0";
                     $result = mysqli_query($conn, $query);
 
                     // Check if there are any results

@@ -3,7 +3,7 @@ include '../configs/db.php';
 
 $book_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$query = "SELECT * FROM books WHERE id = $book_id";
+$query = "SELECT *, (SELECT COUNT(*) FROM borrowed_books WHERE book_id = books.id AND returned = 0) AS borrowed_count FROM books WHERE id = $book_id";
 $result = mysqli_query($conn, $query);
 $book = mysqli_fetch_assoc($result);
 
@@ -28,11 +28,26 @@ if (!$book) {
             <?php include '../includes/sidebar.php'; ?>
         </aside>
         <main class="main-content">
-            <h1><?php echo htmlspecialchars($book['title']); ?></h1>
-            <img src="../<?php echo $book['img']; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
-            <p>Author: <?php echo htmlspecialchars($book['author']); ?></p>
-            <p>Category: <?php echo htmlspecialchars($book['category']); ?></p>
-            <p>Description: <?php echo htmlspecialchars($book['description']); ?></p>
+        <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="book-details">
+                <div class="book-image">
+                    <img src="../<?php echo $book['img']; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
+                </div>
+                <div class="book-info">
+                <h1><?php echo htmlspecialchars($book['title']); ?></h1>
+                    <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
+                    <p><strong>Category:</strong> <?php echo htmlspecialchars($book['category']); ?></p>
+                    <p><strong>Description:</strong> <?php echo htmlspecialchars($book['description']); ?></p>
+                    <?php
+                    $available_stock = $book['stock'] - $book['borrowed_count'];
+                    $button_class = $available_stock > 0 ? 'borrow-btn' : 'borrow-btn disabled';
+                    $button_text = $available_stock > 0 ? 'Borrow Book' : 'Out of Stock';
+                    ?>
+                    <button class="<?php echo $button_class; ?>" <?php echo $available_stock > 0 ? '' : 'disabled'; ?>>
+                        <?php echo $button_text; ?>
+                    </button>
+                </div>
+            </div>
         </main>
     </div>
     <footer>

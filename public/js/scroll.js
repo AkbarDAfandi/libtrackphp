@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupScrolling('top-books');
     setupScrolling('available-books');
     setupScrolling('latest-additions');
+    setupScrolling('search-results');
 });
 
 function setupScrolling(containerId) {
