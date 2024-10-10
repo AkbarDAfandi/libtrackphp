@@ -6,6 +6,7 @@
           <li><a href="?page=search" data-page="search" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a></li>
           <li><a href="#" data-page="history" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i><span>Borrow</span></a></li>
           <li><a href="#" data-page="about" class="nav-link"><i class="fas fa-info-circle"></i><span>About</span></a></li>
+          <li class="profile-button"><a href="#" data-page="profile" class="nav-link"><i class="fas fa-user"></i><span>Profile</span></a></li>
       </ul>
   </nav>
 
@@ -28,3 +29,19 @@
   });
   </script>
 
+
+<style>
+      nav {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+      }
+      nav ul {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+      }
+      .profile-button {
+          margin-top: auto;
+      }
+  </style>

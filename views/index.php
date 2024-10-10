@@ -130,5 +130,3 @@ session_start();
     <script src="../public/js/nav.js"></script>
 
 </body>
-
-<script src="../public/js/sidebar.js"></script>

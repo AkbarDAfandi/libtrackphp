@@ -1,9 +1,12 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../login.php"); // Redirect non-admin users to the main page
+    header("Location: ../login.php");
     exit();
 }
+
+require_once './configs/db.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,15 +26,44 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
             <?php include 'includes/sidebar.php'; ?>
         </aside>
         <main class="main-content">
-            <h1>Admin Page</h1>
-            <?php 
-            var_dump($_SESSION);
-            echo "<br>";
-            var_dump(isset($_SESSION['role']));
-            echo "<br>";
-            var_dump($_SESSION['role'] == 'admin');
-            
-            ?>
+            <h1>Borrowed Books</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Borrower Name</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $query = "SELECT b.title, u.username, bb.borrow_date, bb.due_date, bb.return_date, bb.returned 
+                              FROM borrowed_books bb 
+                              JOIN books b ON bb.book_id = b.id 
+                              JOIN users u ON bb.user_id = u.user_id 
+                              ORDER BY bb.borrow_date DESC";
+                    $result = mysqli_query($conn, $query);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";   
+                            echo "<td>" . htmlspecialchars($row['title']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['borrow_date']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['due_date']) . "</td>";
+                            echo "<td>" . (($row['return_date']) ? htmlspecialchars($row['return_date']) : 'Not returned') . "</td>";
+                            echo "<td>" . ($row['returned'] ? 'Returned' : 'Borrowed') . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>No borrowed books found.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </main>
     </div>
     <footer>
@@ -42,3 +74,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     <script src="public/js/nav.js"></script>
 
 </body>
+<?php
+mysqli_close($conn);
+?>

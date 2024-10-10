@@ -29,21 +29,25 @@ include '../configs/db.php';
                 <table>
                     <thead>
                         <tr>
+                            <th>ISBN</th>
                             <th>Title</th>
                             <th>Author</th>
                             <th>Category</th>
-                            <th>Actions</th>
+                            <th>Stock</th>
+                            <th>Actions</th>    
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT isbn, title, author, category FROM books";
+                        $query = "SELECT isbn, title, author, category, stock FROM books";
                         $result = mysqli_query($conn, $query);
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['isbn']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['title']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['author']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['category']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['stock']) . "</td>";
                             echo "<td>
                                     <a href='editBooks.php?isbn=" . $row['isbn'] . "' class='btn-edit'>Edit</a>
                                       <a href='deleteBooks.php?isbn=" . $row['isbn'] . "' class='btn-delete' onclick='return confirm(\"Are you sure you want to delete this book?\")'>Delete</a>

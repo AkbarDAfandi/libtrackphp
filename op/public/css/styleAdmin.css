@@ -114,6 +114,7 @@ aside {
   left: 0;
   bottom: 0;
   width: 50px;
+  margin-bottom: 10px;
   overflow-y: 0;
   background-color: #f4f4f4;
   padding: 30px 0px 10px 10px;
@@ -203,6 +204,8 @@ footer {
   margin-inline-end: 0px;
   unicode-bidi: isolate;
 }
+
+
 
 /* --------------------- Main CSS END --------------------- */
 
@@ -341,16 +344,21 @@ th, td {
   border-bottom: 1px solid #ddd;
   padding: 10px;
   text-align: left;
+  font-size: medium;
 }
 
 th {
   background-color: #f4f4f4;
   border-bottom: 2px solid #ddd; 
+  font-size: medium;
 }
 
-tr:last-child td {
-  border-bottom: none;
+tr {
+  border-bottom: 1px solid #ddd;
+  font-size: medium;
 }
+
+
 .btn-edit, .btn-delete {
   padding: 5px 10px;
   background-color: #4CAF50;
