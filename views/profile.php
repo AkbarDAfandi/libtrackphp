@@ -28,12 +28,21 @@ require_once '../configs/db.php';
         <main class="main-content">
             <h1>Profile</h1>
             <div class="profile-info">
-                <?php
-                $user_id = $_SESSION['user_id'];
-                $query = "SELECT * FROM users WHERE user_id = $user_id";
-                $result = mysqli_query($conn, $query);
-                ?>
-                
+            <?php
+            $user_id = $_SESSION['user_id'];
+            $query = "SELECT * FROM users WHERE user_id = $user_id";
+            $result = mysqli_query($conn, $query);
+
+
+            if (mysqli_num_rows($result) > 0) {
+                $user = mysqli_fetch_assoc($result);
+                $username = $user['username'];
+                $email = $user['email'];
+                $role = $user['role'];
+            }
+            ?>
+
+            
 
                 <footer>
                     <p class="copyright">&copy; 2024 - LibTrack</p>

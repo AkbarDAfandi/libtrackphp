@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $row['username'];
             $_SESSION['role'] = $row['role'];
             if ($row['role'] === 'admin') {
-                header("Location: op/index.php"); 
+                header("Location: ../op/index.php"); 
                 exit(); 
             } else {
                 header("Location: index.php");
