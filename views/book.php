@@ -45,7 +45,7 @@ if ($user_logged_in) {
             <?php include '../includes/sidebar.php'; ?>
         </aside>
         <main class="main-content">
-            <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="index.php" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
             <div class="book-details">
                 <div class="book-image">
                     <img src="../<?php echo $book['img']; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
@@ -103,3 +103,38 @@ if ($user_logged_in) {
     </script>
 </body>
 </html>
+
+<?php
+    if (isset($_SESSION['success'])) {
+        $success_message = $_SESSION['success'];
+        unset($_SESSION['success']);
+        echo "
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  title: 'Success!',
+                  text: '$success_message',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+          });
+      </script>
+      ";
+    }
+    if (isset($_SESSION['error'])) {
+        $error_message = $_SESSION['error'];
+        unset($_SESSION['error']);
+        echo "
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  title: 'Error!',
+                  text: '$error_message',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              });
+          });
+      </script>
+      ";
+    }
+    ?>

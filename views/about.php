@@ -24,6 +24,7 @@ include '../configs/db.php';
         </aside>
         <main class="main-content">
            <h1>About Us</h1>
+           <p>A simple books tracker website that can be used for fully fledge library or even personal library/collection.</p>
         </main>
     </div>
     <footer>

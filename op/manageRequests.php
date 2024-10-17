@@ -172,7 +172,10 @@ $return_result = mysqli_query($conn, $return_query);
         </main>
     </div>
 </body>
-
+<footer>
+        <p class="copyright">&copy; 2024 - LibTrack</p>
+    </footer>
+</html>
 <?php
 mysqli_close($conn);
 ?>

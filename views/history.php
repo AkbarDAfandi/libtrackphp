@@ -3,7 +3,6 @@ session_start();
 require_once '../configs/db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    $_SESSION['error'] = "Please log in to access this page.";
     header("Location: login.php");
     exit();
 }

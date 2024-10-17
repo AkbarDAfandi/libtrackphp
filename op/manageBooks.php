@@ -34,13 +34,23 @@ include '../configs/db.php';
                             <th>Author</th>
                             <th>Category</th>
                             <th>Stock</th>
-                            <th>Actions</th>    
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT isbn, title, author, category, stock FROM books";
+                        $results_per_page = 10; // Adjust this number as needed
+                        $pagination = isset($_GET['pagination']) ? max(1, (int)$_GET['pagination']) : 1;
+                        $start_from = ($pagination - 1) * $results_per_page;
+
+                        $query = "SELECT * FROM books ORDER BY title ASC LIMIT $start_from, $results_per_page";
                         $result = mysqli_query($conn, $query);
+
+                        $total_query = "SELECT COUNT(*) as total FROM books";
+                        $total_result = mysqli_query($conn, $total_query);
+                        $total_row = mysqli_fetch_assoc($total_result);
+                        $total_pages = ceil($total_row['total'] / $results_per_page);
+
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['isbn']) . "</td>";
@@ -57,8 +67,12 @@ include '../configs/db.php';
                         ?>
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                        <a href="?pagination=<?php echo $i; ?>" <?php echo ($pagination == $i) ? 'class="active"' : ''; ?>><?php echo $i; ?></a>
+                    <?php endfor; ?>
+                </div>
             </div>
-            <a href="addBooks.php" class="btn-add">Add New Book</a>
         </main>
     </div>
     <footer>

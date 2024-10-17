@@ -102,7 +102,7 @@ body {
 }
 .main-content {
   margin-left: 70px;
-  margin-top: 73px;
+  margin-top: 75px;
   flex: 1;
   overflow-y: auto;
   height: calc(100vh - 60px);
@@ -205,7 +205,81 @@ footer {
   unicode-bidi: isolate;
 }
 
+.dashboard-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 20px 15px 0 15px;
+}
 
+.card {
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 20px;
+  width: calc(20% - 20px);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.card i {
+  font-size: 27px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.card h2 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0px;
+}
+
+.greeting {
+  margin-bottom: 5px;
+}
+
+.date {
+  margin-top: 5px;
+  margin-bottom:30px;
+}
+
+.dashboard-tables {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.table-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(50% - 10px);
+}
+
+.table-card h2 {
+  margin-bottom: 15px;
+}
+
+.table-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-card th, .table-card td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-card th {
+  background-color: #f2f2f2;
+}
 
 /* --------------------- Main CSS END --------------------- */
 
@@ -327,7 +401,7 @@ footer {
 .table-container {
   max-width: 100%;
   margin: 20px;
-  padding: 20px;
+  padding: 10px 20px;
   background-color: #f4f4f4;
   border-radius: 10px;
 
@@ -424,12 +498,31 @@ tr {
 /* --------------------- Edit Book CSS END --------------------- */
 
 
-/* --------------------- Add Book CSS --------------------- */
+/* --------------------- Borrowed CSS --------------------- */
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+  border-radius: 10px;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+  border-radius: 10px;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
 
 
-
-
-
-
-
-/* --------------------- Add Book CSS END --------------------- */
+/* --------------------- Borrowed CSS END --------------------- */
