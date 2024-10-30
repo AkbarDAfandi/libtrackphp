@@ -13,8 +13,8 @@ header {
   background-color: #f4f4f4;
   color: #333;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   padding: 17px 25px;
   margin-bottom: 0;
   position: fixed;
@@ -24,6 +24,26 @@ header {
   height: 40px;
   z-index: 1000;
 }
+
+header a {
+  display: flex;
+  align-items: center;
+}
+
+nav {
+  margin-left: 0;
+}
+
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.auth-buttons {
+  margin-left: auto;
+}
+
 header h1 {
   margin: 0;
   padding: 0;
@@ -36,7 +56,6 @@ header h1 {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-
 }
 
 .search-bar input[type="text"] {
@@ -90,8 +109,7 @@ header h1 {
 }
 .button:hover {
   background-color: #3e6a99;
-}
-body {
+}body {
   background-color: #f4f4f4;
 }
 .container {
@@ -109,6 +127,54 @@ body {
   overflow-y: auto;
   height: calc(100vh - 60px);
   transition: margin-left 0.3s ease;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .top-choices-container {
+    overflow-x: auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .main-content {
+    margin-left: 0;
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+  }
+  .menu-items.show {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+  scroll-btn {
+    display: none;
+  }
+
+  .top-choices-container {
+      padding: 10px;
+  }
+
 }
 aside {
   position: fixed;
@@ -122,7 +188,6 @@ aside {
   padding: 30px 0px 10px 10px;
   transition: width 0.3s ease;
   overflow: hidden;
-  
 }
 
 aside:hover {
@@ -172,7 +237,7 @@ nav ul li a.active {
 nav ul li a span {
   padding-left: 5px;
   opacity: 0;
-  font:bold;
+  font: bold;
   transition: opacity 0.3s ease;
 }
 aside:hover nav ul li a span {
@@ -201,6 +266,10 @@ footer {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   unicode-bidi: isolate;
+}
+
+.menu-items.show {
+  display: block; /* or flex, depending on your layout */
 }
 
 /* --------------------- Main CSS END --------------------- */
@@ -347,24 +416,24 @@ footer {
 }
 
 .choice img {
-    width: 100%;
-    height: 200px; 
-    object-fit: cover;
-    object-position: center;
-    transition: opacity 0.3s ease-out;
-    border-radius: 10px;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.3s ease-out;
+  border-radius: 10px;
 }
 
 .choice {
-    width: 150px;
-    margin: 0 10px;
+  width: 150px;
+  margin: 0 10px;
 }
 
 .top-choices {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 20px 0;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px 0;
 }
 
 .scroll-btn {
@@ -389,6 +458,17 @@ footer {
   left: 10px;
 }
 
+@media screen and (max-width: 768px) {
+  .scroll-btn {
+    display: none;
+  }
+
+  .top-choices {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .title {
   font-size: 1em;
   margin-bottom: 0;
@@ -402,6 +482,92 @@ footer {
 
 .scroll-btn.right {
   right: 10px;
+}
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-left: 0;
+  margin-bottom: 20px;
+
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 767px) {
+  .hamburger-menu {
+    display: block;
+    padding: 10px;
+  }
+
+  .dashboard-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .dashboard-tables {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-card {
+    width: 90%;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .menu-items {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+  }
+
+  .menu-items.show {
+    display: block;
+  }
+
+  nav ul li a span {
+    opacity: 1;
+  }
+
+  nav {
+    margin: 20px;
+  }
+
+  .main-content {
+    margin-left: 0;
+    border-top-left-radius: 0;
+    padding : 20px 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  header nav {
+    display: none;
+  }
+  .sidebar {
+    display: block;
+  }
 }
 
 /* --------------------- Display Row Home END --------------------- */
@@ -425,7 +591,8 @@ footer {
   transition: background-color 0.3s;
 }
 
-.category-btn:hover, .category-btn.active {
+.category-btn:hover,
+.category-btn.active {
   background-color: #ddd;
 }
 /* --------------------- Display Row Category END --------------------- */
@@ -433,13 +600,13 @@ footer {
 /* --------------------- Clickable Book --------------------- */
 
 .book-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .book-link:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .book-details {
@@ -461,13 +628,35 @@ footer {
 }
 
 .borrow-btn {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .book-details {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .book-image img {
+    max-width: 100%;
+    height: auto;
+    align-items: center;
+  }
+
+  .book-info p {
+    width: 90%;
+    overflow: hidden;
+  }
+
+  .book-info {
+    margin-bottom: 30px;
+  }
 }
 
 .borrow-btn:hover {
@@ -492,24 +681,23 @@ footer {
   background-color: #a53535;
 }
 
-
 .back-btn {
-    display: inline-block;
-    padding: 10px 15px;
-    margin-top: 10px;
-    background-color: #f0f0f0;
-    color: #333;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+  display: inline-block;
+  padding: 10px 15px;
+  margin-top: 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 .back-btn:hover {
-    background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
 .back-btn i {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 /* --------------------- Clickable Book END --------------------- */
@@ -530,7 +718,8 @@ table {
   margin-top: 20px;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
@@ -562,7 +751,8 @@ tr:hover {
   border-collapse: collapse;
 }
 
-.history-table th, .history-table td {
+.history-table th,
+.history-table td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -574,11 +764,9 @@ tr:hover {
 
 .history-table .return-btn {
   padding: 5px 10px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 3px;
 }
-
-

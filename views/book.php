@@ -30,7 +30,7 @@ if ($user_logged_in) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title><?php echo htmlspecialchars($book['title']); ?> - LibTrack</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -41,7 +41,7 @@ if ($user_logged_in) {
 <body>
     <?php include "../includes/header.php" ?>
     <div class="container">
-        <aside>
+        <aside class="sidebar">
             <?php include '../includes/sidebar.php'; ?>
         </aside>
         <main class="main-content">
@@ -56,7 +56,7 @@ if ($user_logged_in) {
                     <p><strong>Category:</strong> <?php echo htmlspecialchars($book['category']); ?></p>
                     <p><strong>Description:</strong> <?php echo htmlspecialchars($book['description']); ?></p>
                     <?php
-                    $available_stock = $book['stock'] - $book['borrowed_count'];
+                    $available_stock = $book['stock'];
                     $button_class = $available_stock > 0 ? 'borrow-btn' : 'borrow-btn disabled';
                     $button_text = $available_stock > 0 ? 'Borrow Book' : 'Out of Stock';
                     ?>

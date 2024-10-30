@@ -77,7 +77,13 @@ if (isset($_POST['action']) && isset($_POST['request_id']) && isset($_POST['requ
             $update_stock_stmt = mysqli_prepare($conn, $update_stock_query);
             mysqli_stmt_bind_param($update_stock_stmt, "i", $book_id);
             mysqli_stmt_execute($update_stock_stmt);
-        }    }
+        }
+    } elseif ($action === 'rejected') {
+        
+        
+    } else {
+        die("Invalid action");
+    }
 }
 
 // Fetch pending requests
@@ -117,64 +123,65 @@ $return_result = mysqli_query($conn, $return_query);
         </aside>
         <main class="main-content">
             <h2>Pending Borrow Requests</h2>
-                <div class="table-container">
-                    <table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Book</th>
+                        <th>Request Date</th>
+                        <th>Action</th>
+                    </tr>
+                    <?php while ($row = mysqli_fetch_assoc($borrow_result)): ?>
                         <tr>
-                            <th>User</th>
-                            <th>Book</th>
-                            <th>Request Date</th>
-                            <th>Action</th>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo htmlspecialchars($row['title']); ?></td>
+                            <td><?php echo htmlspecialchars($row['request_date']); ?></td>
+                            <td>
+                                <form method="POST">
+                                    <input type="hidden" name="request_id" value="<?php echo $row['id']; ?>">
+                                    <input type="hidden" name="request_type" value="borrow">
+                                    <button type="submit" name="action" value="approved">Approve</button>
+                                    <button type="submit" name="action" value="rejected">Reject</button>
+                                </form>
+                            </td>
                         </tr>
-                        <?php while ($row = mysqli_fetch_assoc($borrow_result)): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['username']); ?></td>
-                                <td><?php echo htmlspecialchars($row['title']); ?></td>
-                                <td><?php echo htmlspecialchars($row['request_date']); ?></td>
-                                <td>
-                                    <form method="POST">
-                                        <input type="hidden" name="request_id" value="<?php echo $row['id']; ?>">
-                                        <input type="hidden" name="request_type" value="borrow">
-                                        <button type="submit" name="action" value="approved">Approve</button>
-                                        <button type="submit" name="action" value="rejected">Reject</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </table>
-                </div>
+                    <?php endwhile; ?>
+                </table>
+            </div>
 
-                <h2>Pending Return Requests</h2>
-                <div class="table-container">
-                    <table>
+            <h2>Pending Return Requests</h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Book</th>
+                        <th>Request Date</th>
+                        <th>Action</th>
+                    </tr>
+                    <?php while ($row = mysqli_fetch_assoc($return_result)): ?>
                         <tr>
-                            <th>User</th>
-                            <th>Book</th>
-                            <th>Request Date</th>
-                            <th>Action</th>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo htmlspecialchars($row['title']); ?></td>
+                            <td><?php echo htmlspecialchars($row['request_date']); ?></td>
+                            <td>
+                                <form method="POST">
+                                    <input type="hidden" name="request_id" value="<?php echo $row['id']; ?>">
+                                    <input type="hidden" name="request_type" value="return">
+                                    <button type="submit" name="action" value="approved">Approve</button>
+                                    <button type="submit" name="action" value="rejected">Reject</button>
+                                </form>
+                            </td>
                         </tr>
-                        <?php while ($row = mysqli_fetch_assoc($return_result)): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['username']); ?></td>
-                                <td><?php echo htmlspecialchars($row['title']); ?></td>
-                                <td><?php echo htmlspecialchars($row['request_date']); ?></td>
-                                <td>
-                                    <form method="POST">
-                                        <input type="hidden" name="request_id" value="<?php echo $row['id']; ?>">
-                                        <input type="hidden" name="request_type" value="return">
-                                        <button type="submit" name="action" value="approved">Approve</button>
-                                        <button type="submit" name="action" value="rejected">Reject</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </table>
-                </div>
+                    <?php endwhile; ?>
+                </table>
+            </div>
         </main>
     </div>
 </body>
 <footer>
-        <p class="copyright">&copy; 2024 - LibTrack</p>
-    </footer>
+    <p class="copyright">&copy; 2024 - LibTrack</p>
+</footer>
+
 </html>
 <?php
 mysqli_close($conn);

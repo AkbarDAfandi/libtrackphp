@@ -1,47 +1,45 @@
   <?php
-  session_start();
-  include '../configs/db.php';
+    session_start();
+    include '../configs/db.php';
 
-  if (isset($_POST['return']) && isset($_SESSION['user_id'])) {
-      $user_id = $_SESSION['user_id'];
-      $book_id = $_POST['book_id'];
-      $return_date = date('Y-m-d');
 
-      // Start transaction
-      mysqli_begin_transaction($conn);
+    if (isset($_POST['return']) && isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        $book_id = $_POST['book_id'];
+        $request_date = date('Y-m-d');
 
-      try {
-          // Update borrowed_books table
-          $update_borrowed = "UPDATE borrowed_books SET returned = 1, return_date = ? WHERE user_id = ? AND book_id = ? AND returned = 0";
-          $stmt = mysqli_prepare($conn, $update_borrowed);
-          mysqli_stmt_bind_param($stmt, "sii", $return_date, $user_id, $book_id);
-          mysqli_stmt_execute($stmt);
+        //Check duplicate request
+        $check_query = "SELECT * FROM return_requests WHERE user_id = ? AND book_id = ? AND (status = 'pending')";
+        $check_stmt = mysqli_prepare($conn, $check_query);
+        mysqli_stmt_bind_param($check_stmt, "ii", $user_id, $book_id);
+        mysqli_stmt_execute($check_stmt);
+        $result = mysqli_stmt_get_result($check_stmt);
 
-          // Update books table to increase stock
-          $update_stock = "UPDATE books SET stock = stock + 1 WHERE id = ?";
-          $stmt = mysqli_prepare($conn, $update_stock);
-          mysqli_stmt_bind_param($stmt, "i", $book_id);
-          mysqli_stmt_execute($stmt);
+        if (mysqli_num_rows($result) > 0) {
+            $_SESSION['error'] = "You have already requested or borrowed this book.";
+            
+        }
 
-          // Commit transaction
-          mysqli_commit($conn);
+        $query = "INSERT INTO return_requests (user_id, book_id, request_date, status) VALUES (?, ?, ?, 'pending')";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "iis", $user_id, $book_id, $request_date);
 
-          $_SESSION['success'] = "Book returned successfully. Stock has been updated.";
-      } catch (Exception $e) {
-          // Rollback transaction on error
-          mysqli_rollback($conn);
-          $_SESSION['error'] = "Error returning book: " . $e->getMessage();
-      }
+        if (mysqli_stmt_execute($stmt)) {
+            $_SESSION['success'] = "Return request submitted successfully. Waiting for admin approval.";
+        } else {
+            $_SESSION['error'] = "Error submitting return request.";
+        }
 
-      mysqli_close($conn);
 
-      if (isset($_POST['source']) && $_POST['source'] == 'history') {
-          header("Location: ../views/history.php");
-      } else {
-          header("Location: ../views/book.php?id=" . $book_id);
-      }
-      exit();
-  } else {
-      header("Location: ../views/index.php");
-      exit();
-  }
+        mysqli_close($conn);
+
+        if (isset($_POST['source']) && $_POST['source'] == 'history') {
+            header("Location: ../views/history.php");
+        } else {
+            header("Location: ../views/book.php?id=" . $book_id);
+        }
+        exit();
+    } else {
+        header("Location: ../views/index.php");
+        exit();
+    }

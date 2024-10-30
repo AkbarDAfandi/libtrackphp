@@ -6,9 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT user_id, username, password, role FROM users WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
+    $sql = "SELECT user_id, username, password, role FROM users WHERE BINARY username = ?";
+    $stmt = $conn->prepare($sql);    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } else {
-            $error = "Invalid username or password";
+            $_SESSION['error'] = "Invalid username or password";
         }
     } else {
         $error = "Invalid username or password";
@@ -37,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Login - LibTrack</title>
     <link rel="stylesheet" href="../public/css/style.css">
 </head>
@@ -56,3 +55,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 </html>
+<?php
+    if (isset($_SESSION['success'])) {
+        $success_message = $_SESSION['success'];
+        unset($_SESSION['success']);
+        echo "
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  title: 'Success!',
+                  text: '$success_message',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+          });
+      </script>
+      ";
+    }
+    if (isset($_SESSION['error'])) {
+        $error_message = $_SESSION['error'];
+        unset($_SESSION['error']);
+        echo "
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                  title: 'Error!',
+                  text: '$error_message',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              });
+          });
+      </script>
+      ";
+    }
+    ?>
