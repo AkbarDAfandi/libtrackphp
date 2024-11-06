@@ -1,8 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    setupScrolling('top-books');
-    setupScrolling('available-books');
-    setupScrolling('latest-additions');
-    setupScrolling('search-results');
+    const containers = ['top-books', 'available-books', 'latest-additions', 'search-results'];
+    
+    containers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container) {
+            setupScrolling(containerId);
+        }
+    });
 });
 
 function setupScrolling(containerId) {
@@ -10,6 +14,8 @@ function setupScrolling(containerId) {
     const scrollContainer = container.querySelector('.top-choices');
     const leftBtn = container.querySelector('.scroll-btn.left');
     const rightBtn = container.querySelector('.scroll-btn.right');
+
+    if (!scrollContainer || !leftBtn || !rightBtn) return;
 
     rightBtn.addEventListener('click', () => {
         scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
@@ -26,5 +32,4 @@ function setupScrolling(containerId) {
             ? 'block' : 'none';
     });
 }
-
 

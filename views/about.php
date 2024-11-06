@@ -25,6 +25,15 @@ include '../configs/db.php';
         <main class="main-content">
            <h1>About Us</h1>
            <p>A simple books tracker website that can be used for fully fledge library or even personal library/collection.</p>
+           <p>This project is for a school assignment.</p>
+           <p>Made with ❤ by Akbar Afandi.</p>
+           <div class="social-buttons">
+               <a href="https://instagram.com/rexec.png" target="_blank"><i class="fab fa-instagram"></i></a>
+               <a href="https://github.com/AkbarDAfandi" target="_blank"><i class="fab fa-github"></i></a>
+               <a href="https://www.youtube.com/@akbarafandifl4978" target="_blank"><i class="fab fa-youtube"></i></a>
+               <!-- <a href="https://wa.me/yourphonenumber" target="_blank"><i class="fab fa-whatsapp"></i></a> -->
+           </div>
+           <p>The source code for this project is on <a href="https://github.com/AkbarDAfandi/libtrackphp" target="_blank">github</a>.</p>
         </main>
     </div>
     <footer>

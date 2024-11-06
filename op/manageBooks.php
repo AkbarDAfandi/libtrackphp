@@ -5,6 +5,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 include '../configs/db.php';
+
+$_GET['page'] = 'manageBooks';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,10 +61,10 @@ include '../configs/db.php';
                             echo "<td>" . htmlspecialchars($row['author']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['category']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['stock']) . "</td>";
-                            echo "<td>
-                                    <a href='editBooks.php?isbn=" . $row['isbn'] . "' class='btn-edit'>Edit</a>
-                                      <a href='deleteBooks.php?isbn=" . $row['isbn'] . "' class='btn-delete' onclick='return confirm(\"Are you sure you want to delete this book?\")'>Delete</a>
-                                   </td>";
+                            echo "<td class='actions'>"; 
+                            echo "<button onclick='window.location.href=`editBooks.php?isbn={$row['isbn']}`' class='edit-btn'><i class='fas fa-edit'></i></button>";
+                            echo "<button onclick='window.location.href=`deleteBooks.php?isbn={$row['isbn']}`' class='delete-btn'><i class='fas fa-trash'></i></button>";
+                            echo "</td>";
                             echo "</tr>";
                         }
                         ?>

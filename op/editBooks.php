@@ -5,6 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+$_GET['page'] = 'manageBooks';
+
 require_once '../configs/db.php';
 
 $book_id = isset($_GET['isbn']) ? $_GET['isbn'] : null;

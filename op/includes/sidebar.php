@@ -5,6 +5,7 @@
         <li><a href="#" data-page="addBooks" class="nav-link"><i class="fa-solid fa-plus"></i><span>Add Books</span></a></li>
         <li><a href="#" data-page="manageRequests" class="nav-link"><i class="fa-solid fa-circle-exclamation"></i><span class="marquee">Requests</span></a></li>
         <li><a href="#" data-page="borrowed" class="nav-link"><i class="fa-solid fa-book-open"></i><span class="marquee">Borrowed</span></a></li>
+        <li><a href="#" data-page="users" class="nav-link"><i class="fa-solid fa-users-rectangle"></i><span class="marquee">Users</span></a></li>
         <li class="profile-button"><a href="#" data-page="profile" class="nav-link"><i class="fas fa-user"></i><span>Profile</span></a></li>
     </ul>
 </nav>
