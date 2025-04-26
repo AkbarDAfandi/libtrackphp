@@ -1,4 +1,4 @@
-# Pelacak Buku Perpustakaan [WIP]
+# Pelacak Buku Perpustakaan 
 
 Selamat datang di Pelacak Buku Perpustakaan, sebuah situs web sederhana untuk mengelola koleksi buku perpustakaan Anda.
 
