@@ -1,5 +1,5 @@
 <header>
-    <a>
+    <a href="../views/index.php?page=index">
         <h1>LibTrack</h1>
     </a>
     <nav class="header-nav">

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -8,14 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-
-$query = "SELECT b.id as book_id, b.title, bb.borrow_date, bb.due_date, bb.return_date, bb.returned 
-          FROM borrowed_books bb 
-          JOIN books b ON bb.book_id = b.id 
-          WHERE bb.user_id = $user_id 
-          ORDER BY bb.borrow_date DESC";
-
-$result = mysqli_query($conn, $query);
+$history = array_values(array_filter(libtrack_borrowed_books(), fn ($row) => (int) $row['user_id'] === (int) $user_id));
+usort($history, fn ($a, $b) => strcmp($b['borrow_date'], $a['borrow_date']));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,17 +44,18 @@ $result = mysqli_query($conn, $query);
                 </thead>
                 <tbody>
                     <?php
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
+                    if ($history) {
+                        foreach ($history as $row) {
+                            $book = libtrack_find_book_by_id((int) $row['book_id']);
                             echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['title']) . "</td>";
+                            echo "<td>" . htmlspecialchars($book['title'] ?? 'Unknown Book') . "</td>";
                             echo "<td>" . htmlspecialchars($row['borrow_date']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['due_date']) . "</td>";
                             echo "<td>" . (($row['return_date']) ? htmlspecialchars($row['return_date']) : 'Not returned') . "</td>";
                             echo "<td>" . ($row['returned'] ? 'Returned' : 'Borrowed') . "</td>";
                             echo "<td>";
                             if (!$row['returned']) {
-                                echo "<form action='../includes/return_book.php' method='POST' onsubmit='return confirmReturn(event)'>";
+                                echo "<form action='../includes/return_book.php' method='POST'>";
                                 echo "<input type='hidden' name='book_id' value='" . $row['book_id'] . "'>";
                                 echo "<input type='hidden' name='source' value='history'>";
                                 echo "<button type='submit' name='return' class='return-btn'>Return</button>";
@@ -120,7 +115,3 @@ $result = mysqli_query($conn, $query);
 </body>
 
 </html>
-
-<?php
-mysqli_close($conn);
-?>

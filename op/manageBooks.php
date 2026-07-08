@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../login.php");
+    header("Location: ../views/login.php");
     exit();
 }
-include '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 $_GET['page'] = 'manageBooks';
 
@@ -45,16 +45,12 @@ $_GET['page'] = 'manageBooks';
                         $results_per_page = 10; // Adjust this number as needed
                         $pagination = isset($_GET['pagination']) ? max(1, (int)$_GET['pagination']) : 1;
                         $start_from = ($pagination - 1) * $results_per_page;
+                        $books = libtrack_books();
+                        usort($books, fn ($a, $b) => strcmp($a['title'], $b['title']));
+                        $total_pages = ceil(count($books) / $results_per_page);
+                        $pageBooks = array_slice($books, $start_from, $results_per_page);
 
-                        $query = "SELECT * FROM books ORDER BY title ASC LIMIT $start_from, $results_per_page";
-                        $result = mysqli_query($conn, $query);
-
-                        $total_query = "SELECT COUNT(*) as total FROM books";
-                        $total_result = mysqli_query($conn, $total_query);
-                        $total_row = mysqli_fetch_assoc($total_result);
-                        $total_pages = ceil($total_row['total'] / $results_per_page);
-
-                        while ($row = mysqli_fetch_assoc($result)) {
+                        foreach ($pageBooks as $row) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['isbn']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['title']) . "</td>";
@@ -63,7 +59,7 @@ $_GET['page'] = 'manageBooks';
                             echo "<td>" . htmlspecialchars($row['stock']) . "</td>";
                             echo "<td class='actions'>"; 
                             echo "<button onclick='window.location.href=`editBooks.php?isbn={$row['isbn']}`' class='edit-btn'><i class='fas fa-edit'></i></button>";
-                            echo "<button onclick='window.location.href=`deleteBooks.php?isbn={$row['isbn']}`' class='delete-btn'><i class='fas fa-trash'></i></button>";
+                            echo "<button onclick='window.location.href=`deleteBook.php?isbn={$row['isbn']}`' class='delete-btn'><i class='fas fa-trash'></i></button>";
                             echo "</td>";
                             echo "</tr>";
                         }

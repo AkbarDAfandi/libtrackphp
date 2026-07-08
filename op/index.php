@@ -1,32 +1,22 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../login.php");
+    header("Location: ../views/login.php");
     exit();
 }
 
 // Set timezone
 date_default_timezone_set("Asia/Jakarta");
 
-include_once "../configs/db.php";
+require_once __DIR__ . "/../configs/static_data.php";
 
-// Fetch required data
-$total_books = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM books"))['count'];
-$total_borrowed = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM borrowed_books WHERE return_date IS NULL"))['count'];
-$total_overdue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM borrowed_books WHERE return_date IS NULL AND due_date < CURDATE()"))['count'];
-$total_users = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM users"))['count'];
-$latest_borrowed = mysqli_query($conn, "SELECT b.title, u.username, bb.borrow_date 
-                                        FROM borrowed_books bb 
-                                        JOIN books b ON bb.book_id = b.id 
-                                        JOIN users u ON bb.user_id = u.user_id 
-                                        ORDER BY bb.borrow_date DESC LIMIT 5");
-
-$latest_returned = mysqli_query($conn, "SELECT b.title, u.username, bb.return_date 
-                                        FROM borrowed_books bb 
-                                        JOIN books b ON bb.book_id = b.id 
-                                        JOIN users u ON bb.user_id = u.user_id 
-                                        WHERE bb.return_date IS NOT NULL 
-                                        ORDER BY bb.return_date DESC LIMIT 5");
+$borrowedBooks = libtrack_borrowed_books();
+$total_books = count(libtrack_books());
+$total_borrowed = count(array_filter($borrowedBooks, fn ($row) => empty($row['return_date'])));
+$total_overdue = count(array_filter($borrowedBooks, fn ($row) => empty($row['return_date']) && $row['due_date'] < date('Y-m-d')));
+$total_users = count(libtrack_users());
+$latest_borrowed = array_slice($borrowedBooks, 0, 5);
+$latest_returned = array_slice(array_filter($borrowedBooks, fn ($row) => !empty($row['return_date'])), 0, 5);
 
 
 ?>
@@ -85,13 +75,15 @@ $latest_returned = mysqli_query($conn, "SELECT b.title, u.username, bb.return_da
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = mysqli_fetch_assoc($latest_borrowed)) : ?>
+                            <?php foreach ($latest_borrowed as $row) : ?>
+                                <?php $book = libtrack_find_book_by_id((int) $row['book_id']); ?>
+                                <?php $user = libtrack_find_user_by_id((int) $row['user_id']); ?>
                                 <tr>
-                                    <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo $row['username']; ?></td>
+                                    <td><?php echo htmlspecialchars($book['title'] ?? 'Unknown Book'); ?></td>
+                                    <td><?php echo htmlspecialchars($user['username'] ?? 'Unknown User'); ?></td>
                                     <td><?php echo $row['borrow_date']; ?></td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -107,13 +99,15 @@ $latest_returned = mysqli_query($conn, "SELECT b.title, u.username, bb.return_da
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = mysqli_fetch_assoc($latest_returned)) : ?>
+                            <?php foreach ($latest_returned as $row) : ?>
+                                <?php $book = libtrack_find_book_by_id((int) $row['book_id']); ?>
+                                <?php $user = libtrack_find_user_by_id((int) $row['user_id']); ?>
                                 <tr>
-                                    <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo $row['username']; ?></td>
+                                    <td><?php echo htmlspecialchars($book['title'] ?? 'Unknown Book'); ?></td>
+                                    <td><?php echo htmlspecialchars($user['username'] ?? 'Unknown User'); ?></td>
                                     <td><?php echo $row['return_date']; ?></td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -128,4 +122,3 @@ $latest_returned = mysqli_query($conn, "SELECT b.title, u.username, bb.return_da
 </body>
 
 </html>
-<?php mysqli_close($conn); ?>

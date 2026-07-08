@@ -291,6 +291,25 @@ footer {
   margin-bottom: 20px;
 }
 
+.demo-credentials {
+  margin-bottom: 18px;
+  padding: 12px;
+  border: 1px solid #c8d9ee;
+  border-radius: 6px;
+  background-color: #f3f8fe;
+  color: #24425f;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.demo-credentials p {
+  margin: 4px 0 0;
+}
+
+.demo-credentials span {
+  font-weight: 700;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;

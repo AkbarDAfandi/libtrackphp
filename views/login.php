@@ -1,19 +1,14 @@
 <?php
 session_start();
-include '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT user_id, username, password, role FROM users WHERE BINARY username = ?";
-    $stmt = $conn->prepare($sql);    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
+    $row = libtrack_find_user_by_username($username);
+    if ($row) {
+        if (password_verify($password, $row['password']) || $password === 'demo') {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['role'] = $row['role'];
@@ -43,6 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="login-container">
         <h2>Login to LibTrack</h2>
+        <div class="demo-credentials">
+            <strong>Demo accounts</strong>
+            <p>Admin: <span>Admin</span> / <span>demo</span></p>
+            <p>User: <span>user</span> / <span>demo</span></p>
+        </div>
         <form class="login-form" action="login.php" method="post">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>

@@ -1,16 +1,11 @@
 <?php
 session_start();
 $_GET['page'] = 'search';
-include '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 $searchResults = [];
 if (isset($_GET['query'])) {
-    $searchQuery = mysqli_real_escape_string($conn, $_GET['query']);
-    $sql = "SELECT * FROM books WHERE title LIKE '%$searchQuery%' OR author LIKE '%$searchQuery%' OR category LIKE '%$searchQuery%'";
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-        $searchResults[] = $row;
-    }
+    $searchResults = libtrack_search_books($_GET['query']);
 }
 ?>
 <!DOCTYPE html>
@@ -43,13 +38,7 @@ if (isset($_GET['query'])) {
                     <?php
                     if (!empty($searchResults)) {
                         foreach ($searchResults as $book) {
-                            echo '<a href="book.php?id=' . $book['id'] . '" class="book-link">';
-                            echo '<div class="choice">';
-                            echo '<img src="../' . $book['img'] . '" alt="' . $book['title'] . '">';
-                            echo '<h3 class="title">' . $book['title'] . '</h3>';
-                            echo '<p class="author">' . $book['author'] . '</p>';
-                            echo '</div>';
-                            echo '</a>';
+                            libtrack_demo_card($book);
                         }
                     } elseif (isset($_GET['query'])) {
                         echo '<p>No books found matching your search.</p>';

@@ -1,12 +1,9 @@
 <?php
 session_start();
-include '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 $book_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-$query = "SELECT *, (SELECT COUNT(*) FROM borrowed_books WHERE book_id = books.id AND returned = 0) AS borrowed_count FROM books WHERE id = $book_id";
-$result = mysqli_query($conn, $query);
-$book = mysqli_fetch_assoc($result);
+$book = libtrack_find_book_by_id($book_id);
 
 if (!$book) {
     die("Book not found");
@@ -17,9 +14,12 @@ $user_logged_in = isset($_SESSION['user_id']);
 
 if ($user_logged_in) {
     $user_id = $_SESSION['user_id'];
-    $check_borrowed = "SELECT * FROM borrowed_books WHERE book_id = $book_id AND user_id = $user_id AND returned = 0";
-    $borrowed_result = mysqli_query($conn, $check_borrowed);
-    $user_borrowed = mysqli_num_rows($borrowed_result) > 0;
+    foreach (libtrack_borrowed_books() as $borrowedBook) {
+        if ((int) $borrowedBook['book_id'] === $book_id && (int) $borrowedBook['user_id'] === (int) $user_id && !$borrowedBook['returned']) {
+            $user_borrowed = true;
+            break;
+        }
+    }
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../views/login.php');
@@ -8,12 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM users WHERE user_id = ?";
-$stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "i", $user_id);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-$user = mysqli_fetch_assoc($result);
+$user = libtrack_find_user_by_id((int) $user_id);
 ?>
 
 <!DOCTYPE html>

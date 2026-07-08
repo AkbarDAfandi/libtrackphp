@@ -1,22 +1,19 @@
 <?php
 session_start();
-require_once '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 $_GET['page'] = 'users';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../views/index.php');
+    header('Location: ../views/login.php');
     exit();
 }
 
 $records_per_page = 10;
 $page = isset($_GET['p']) ? $_GET['p'] : 1;
 $offset = ($page - 1) * $records_per_page;
-
-
-$total_query = "SELECT COUNT(*) as count FROM users";
-$total_result = mysqli_query($conn, $total_query);
-$total_records = mysqli_fetch_assoc($total_result)['count'];
+$users = libtrack_users();
+$total_records = count($users);
 $total_pages = ceil($total_records / $records_per_page);
 ?>
 
@@ -42,7 +39,7 @@ $total_pages = ceil($total_records / $records_per_page);
             <div class="search-section">
                 <input type="text" id="searchUser" placeholder="Search users...">
             </div>
-            <table class="users">
+            <table class="users-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -54,15 +51,12 @@ $total_pages = ceil($total_records / $records_per_page);
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM users ORDER BY user_id ASC LIMIT $offset, $records_per_page";
-                    $result = mysqli_query($conn, $query);
-
-                    while ($user = mysqli_fetch_assoc($result)) {
+                    foreach (array_slice($users, $offset, $records_per_page) as $user) {
                         echo "<tr>";
                         echo "<td>{$user['user_id']}</td>";
-                        echo "<td>{$user['username']}</td>";
-                        echo "<td>{$user['email']}</td>";
-                        echo "<td>{$user['role']}</td>";
+                        echo "<td>" . htmlspecialchars($user['username']) . "</td>";
+                        echo "<td>" . htmlspecialchars($user['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($user['role'] ?: 'user') . "</td>";
                         echo "<td class='actions'>";
                         echo "<button onclick='window.location.href=`editUser.php?id={$user['user_id']}`' class='edit-btn'><i class='fas fa-edit'></i></button>";
                         echo "<button class='delete-btn' data-id='{$user['user_id']}'><i class='fas fa-trash'></i></button>";

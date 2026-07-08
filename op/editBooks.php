@@ -1,23 +1,19 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../login.php");
+    header("Location: ../views/login.php");
     exit();
 }
 
 $_GET['page'] = 'manageBooks';
 
-require_once '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 $book_id = isset($_GET['isbn']) ? $_GET['isbn'] : null;
 $book = null;
 
 if ($book_id) {
-    $stmt = $conn->prepare("SELECT * FROM books WHERE isbn = ?");
-    $stmt->bind_param("i", $book_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $book = $result->fetch_assoc();
+    $book = libtrack_find_book_by_isbn($book_id);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -29,43 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stock = $_POST['stock'];
 
 
-    // Handle image upload
-    $img_path = $book ? $book['img'] : '';
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $target_dir = "../public/images/books/";
-        $target_file = $target_dir . basename($_FILES["image"]["name"]);
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        // Check if image file is a actual image or fake image
-        $check = getimagesize($_FILES["image"]["tmp_name"]);
-        if ($check !== false) {
-            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                $img_path = "../public/images/books/" . basename($_FILES["image"]["name"]);
-            } else {
-                $error = "Sorry, there was an error uploading your file.";
-            }
-        } else {
-            $error = "File is not an image.";
-        }
-    }
-
-    if (!isset($error)) {
-        if ($book_id) {
-            $stmt = $conn->prepare("UPDATE books SET title = ?, author = ?, isbn = ?, category = ?, description = ?, img = ?, stock = ? WHERE isbn = ?");
-            $stmt->bind_param("sssssssi", $title, $author, $isbn, $category, $description, $img_path, $stock, $book_id);
-        } else {
-            $stmt = $conn->prepare("INSERT INTO books (title, author, isbn, category, description, img, stock) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssssi", $title, $author, $isbn, $category, $description, $img_path, $stock);
-        }
-
-        if ($stmt->execute()) {
-            $_SESSION['book_updated'] = true;
-            header("Location: editBooks.php?isbn=" . $isbn);
-            exit();
-        } else {
-            $error = "Error updating book: " . $conn->error;
-        }
-    }
+    $_SESSION['book_updated'] = true;
+    header("Location: editBooks.php?isbn=" . $isbn);
+    exit();
 }
 ?>
 

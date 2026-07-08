@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../login.php");
+    header("Location: ../views/login.php");
     exit();
 }
 
-require_once './configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,30 +41,21 @@ require_once './configs/db.php';
                 <tbody>
                     <?php
                     $results_per_page = 10;
-                    // Pagination
-                    $results_per_page = 10; // You can adjust this number
                     $pagination = isset($_GET['pagination']) ? max(1, (int)$_GET['pagination']) : 1;
                     $start_from = ($pagination - 1) * $results_per_page;
-                    $query = "SELECT b.title, u.username, bb.borrow_date, bb.due_date, bb.return_date, bb.returned 
-                    FROM borrowed_books bb 
-                    JOIN books b ON bb.book_id = b.id 
-                    JOIN users u ON bb.user_id = u.user_id 
-                    ORDER BY bb.borrow_date DESC
-                    LIMIT $start_from, $results_per_page";
+                    $borrowedBooks = libtrack_borrowed_books();
+                    usort($borrowedBooks, fn ($a, $b) => strcmp($b['borrow_date'], $a['borrow_date']));
+                    $total_pages = ceil(count($borrowedBooks) / $results_per_page);
+                    $pageBorrowedBooks = array_slice($borrowedBooks, $start_from, $results_per_page);
 
-                    $total_query = "SELECT COUNT(*) as total FROM borrowed_books";
-                    $total_result = mysqli_query($conn, $total_query);
-                    $total_row = mysqli_fetch_assoc($total_result);
-                    $total_pages = ceil($total_row['total'] / $results_per_page);
-
-                    $result = mysqli_query($conn, $query);
-
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
+                    if ($pageBorrowedBooks) {
+                        foreach ($pageBorrowedBooks as $row) {
+                            $book = libtrack_find_book_by_id((int) $row['book_id']);
+                            $user = libtrack_find_user_by_id((int) $row['user_id']);
 
                             echo "<tr>";   
-                            echo "<td>" . htmlspecialchars($row['title']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+                            echo "<td>" . htmlspecialchars($book['title'] ?? 'Unknown Book') . "</td>";
+                            echo "<td>" . htmlspecialchars($user['username'] ?? 'Unknown User') . "</td>";
                             echo "<td>" . htmlspecialchars($row['borrow_date']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['due_date']) . "</td>";
                             echo "<td>" . (($row['return_date']) ? htmlspecialchars($row['return_date']) : 'Not returned') . "</td>";
@@ -96,6 +87,3 @@ require_once './configs/db.php';
     <script src="public/js/nav.js"></script>
 
 </body>
-<?php
-mysqli_close($conn);
-?>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/../configs/static_data.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,29 +25,9 @@ session_start();
                 <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
                 <div class="top-choices">
                     <?php
-                    // Include your database connection file
-                    include '../configs/db.php';
-
-                    // Fetch data from the database (replace with your query)
-                    $query = "SELECT id, title, img, author FROM books";
-                    $result = mysqli_query($conn, $query);
-                    // Check if there are any results
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<a href="book.php?id=' . $row['id'] . '" class="book-link">';
-                            echo '<div class="choice">';
-                            echo '<img src="../' . $row['img'] . '" alt="' . $row['title'] . '">';
-                            echo '<h3 class="title">' . $row['title'] . '</h3>';
-                            echo '<p class="author">' . $row['author'] . '</p>';
-                            echo '</div>';
-                            echo '</a>';
-                        }
-                    } else {
-                        echo "No books found.";
+                    foreach (libtrack_books() as $book) {
+                        libtrack_demo_card($book);
                     }
-
-                    // Close the database connection
-                    mysqli_close($conn);
                     ?>
                 </div>
                 <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
@@ -56,32 +37,9 @@ session_start();
                 <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
                 <div class="top-choices">
                     <?php
-                    // Include your database connection file
-                    include '../configs/db.php';
-
-                    // Fetch data from the database (replace with your query)
-                    $query = "SELECT id, title, img, author FROM books ORDER BY date_added DESC LIMIT 10";
-                
-                    $result = mysqli_query($conn, $query);
-
-                    // Check if there are any results
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<a href="book.php?id=' . $row['id'] . '" class="book-link">';
-                            echo '<div class="choice">';
-                            echo '<img src="../' . $row['img'] . '" alt="' . $row['title'] . '">';
-                            echo '<h3 class="title">' . $row['title'] . '</h3>';
-                            echo '<p class="author">' . $row['author'] . '</p>';
-                            echo '</div>';
-                            echo '</a>';
-                        }
-                    } else {
-                        echo "No books found.";
+                    foreach (array_reverse(libtrack_books()) as $book) {
+                        libtrack_demo_card($book);
                     }
-
-
-                    // Close the database connection
-                    mysqli_close($conn);
                     ?>
                 </div>
                 <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
@@ -91,31 +49,11 @@ session_start();
                 <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
                 <div class="top-choices">
                     <?php
-                    // Include your database connection file
-                    include '../configs/db.php';
-
-                    // Fetch data from the database (replace with your query)
-                    $query = "SELECT id, title, img, author FROM books WHERE stock > 0";
-                    $result = mysqli_query($conn, $query);
-
-                    // Check if there are any results
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<a href="book.php?id=' . $row['id'] . '" class="book-link">';
-                            echo '<div class="choice">';
-                            echo '<img src="../' . $row['img'] . '" alt="' . $row['title'] . '">';
-                            echo '<h3 class="title">' . $row['title'] . '</h3>';
-                            echo '<p class="author">' . $row['author'] . '</p>';
-                            echo '</div>';
-                            echo '</a>';
+                    foreach (libtrack_books() as $book) {
+                        if ((int) $book['stock'] > 0) {
+                            libtrack_demo_card($book);
                         }
-                    } else {
-                        echo "No books found.";
                     }
-
-
-                    // Close the database connection
-                    mysqli_close($conn);
                     ?>
                 </div>
                 <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>

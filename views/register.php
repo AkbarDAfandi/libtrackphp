@@ -1,22 +1,25 @@
 <?php
 session_start();
-require_once '../configs/db.php';
+require_once __DIR__ . '/../configs/static_data.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $email = $_POST['email'];
 
-    $sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $username, $password, $email);
-
-    if ($stmt->execute()) {
+    if (libtrack_find_user_by_username($username)) {
+        $error = "Username already exists in the demo data.";
+    } else {
+        $_SESSION['demo_registered_user'] = [
+            'user_id' => 100,
+            'username' => $username,
+            'email' => $email,
+            'password' => $password,
+            'role' => '',
+        ];
         $_SESSION['success'] = "Registration successful. Please log in.";
         header("Location: login.php");
         exit();
-    } else {
-        $error = "Registration failed. Please try again.";
     }
 }
 ?>

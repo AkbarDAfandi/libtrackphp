@@ -1,6 +1,11 @@
 <?php
 session_start();
 $_GET['page'] = 'category';
+require_once __DIR__ . '/../configs/static_data.php';
+$currentCategory = isset($_GET['category']) ? $_GET['category'] : '';
+$books = $currentCategory
+    ? array_values(array_filter(libtrack_books(), fn ($book) => $book['category'] === $currentCategory))
+    : libtrack_books();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,17 +29,7 @@ $_GET['page'] = 'category';
             <div class="category-buttons">
                 <a href="category.php" class="category-btn">All</a>
                 <?php
-                // Include your database connection file
-                include '../configs/db.php';
-
-                $currentCategory = isset($_GET['category']) ? $_GET['category'] : '';
-
-                // Fetch distinct categories from the database
-                $categoryQuery = "SELECT DISTINCT category FROM books";
-                $categoryResult = mysqli_query($conn, $categoryQuery);
-
-                while ($categoryRow = mysqli_fetch_assoc($categoryResult)) {
-                    $category = $categoryRow['category'];
+                foreach (libtrack_categories() as $category) {
                     $activeClass = ($category === $currentCategory) ? ' active' : '';
                     echo '<a href="category.php?category=' . urlencode($category) . '" class="category-btn' . $activeClass . '">' . htmlspecialchars($category) . '</a>';
                 }
@@ -45,24 +40,9 @@ $_GET['page'] = 'category';
                 <button class="scroll-btn left" style="display: none;"><i class="fas fa-chevron-left"></i></button>
                 <div class="top-choices">
                     <?php
-
-                    $currentCategory = isset($_GET['category']) ? mysqli_real_escape_string($conn, $_GET['category']) : '';
-
-                    $query = $currentCategory ?
-                        "SELECT title, img, author, id FROM books WHERE category = '$currentCategory'" :
-                        "SELECT title, img, author, id FROM books";
-
-                    $result = mysqli_query($conn, $query);
-
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<a href="book.php?id=' . $row['id'] . '" class="book-link">';
-                            echo '<div class="choice">';
-                            echo '<img src="../' . $row['img'] . '" alt="' . $row['title'] . '">';
-                            echo '<h3 class="title">' . $row['title'] . '</h3>';
-                            echo '<p class="author">' . $row['author'] . '</p>';
-                            echo '</div>';
-                            echo '</a>';
+                    if ($books) {
+                        foreach ($books as $book) {
+                            libtrack_demo_card($book);
                         }
                     } else {
                         echo "No books found in this category.";
