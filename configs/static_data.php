@@ -102,14 +102,14 @@ function libtrack_users(): array
         [
             'user_id' => 2,
             'username' => 'Admin',
-            'email' => 'akbar.for.live@gmail.com',
+            'email' => 'admin@rexcloud.com',
             'password' => '$2y$10$XT5WY1nrTBt0gyiexW/2fOAAvmG87mozD/DTh2z5LdYDBWh1WCCYy',
             'role' => 'admin',
         ],
         [
             'user_id' => 3,
             'username' => 'user',
-            'email' => 'user@aafd.com',
+            'email' => 'user@rexcloud.com',
             'password' => '$2y$10$UtiniPNX/c43iJVk8LkZOu2QVGBRoYvAhArTX1iGM.2GONf2ZzlQ6',
             'role' => '',
         ],
